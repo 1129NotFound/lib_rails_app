@@ -1,5 +1,16 @@
 class User < ApplicationRecord
+  has_many :loans
+  has_many :books, through: :loans
 
+  validates :student_no, presence: true, uniqueness: true
+  validates :name, presence: true
+  validates :role, presence: true
+  validates :password, presence: true
+
+  def authenticate(input_password)
+    self.password == input_password
+  end
+  
     def change
         create_table :users do |t|
           t.string :student_no, null: false, unique: true  # 学籍番号
