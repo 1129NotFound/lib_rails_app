@@ -4,13 +4,31 @@
 
 <h1>Books</h1>
 
+<%= form_with url: books_path, method: :get, local: true do %>
+  <div>
+    <%= label_tag :keyword, "キーワード（タイトル／著者）" %>
+    <%= text_field_tag :keyword, params[:keyword] %>
+  </div>
+
+  <div>
+    <%= label_tag :category, "カテゴリ" %>
+    <%= select_tag :category,
+          options_for_select(Book.pluck(:category).uniq.compact, params[:category]),
+          include_blank: "すべて" %>
+  </div>
+
+  <div>
+    <%= submit_tag "検索" %>
+  </div>
+<% end %>
+
 <div id="books">
   <% @books.each do |book| %>
     <%= render book %>
     <p>
-      <%= link_to "Show this book", book %>
+      <%= link_to "書籍の詳細", book %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New book", new_book_path %>
+<%= link_to "書籍を追加", new_book_path %>
