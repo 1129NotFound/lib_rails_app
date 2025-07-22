@@ -1,24 +1,16 @@
-<h1>書籍一覧</h1>
+<p style="color: green"><%= notice %></p>
 
-<table>
-  <thead>
-    <tr>
-      <th>タイトル</th>
-      <th>著者</th>
-      <th>ISBN</th>
-      <th>カテゴリー</th>
-      <th>在庫数</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @books.each do |book| %>
-      <tr>
-        <td><%= book.title %></td>
-        <td><%= book.author %></td>
-        <td><%= book.isbn %></td>
-        <td><%= book.category %></td>
-        <td><%= book.total_copies %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% content_for :title, "Books" %>
+
+<h1>Books</h1>
+
+<div id="books">
+  <% @books.each do |book| %>
+    <%= render book %>
+    <p>
+      <%= link_to "Show this book", book %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New book", new_book_path %>

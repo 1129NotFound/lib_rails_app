@@ -3,13 +3,13 @@
 one:
   title: MyString
   author: MyString
-  isbn: MyString
+  isbn: 1
   category: MyString
   total_copies: 1
 
 two:
   title: MyString
   author: MyString
-  isbn: MyString
+  isbn: 1
   category: MyString
   total_copies: 1
