@@ -1,23 +1,34 @@
 class Book < ApplicationRecord
-<<<<<<< HEAD
-    class Book < ApplicationRecord
-        has_many :loans
-        has_many :users, through: :loans
-      
-        validates :title, presence: true
-        validates :author, presence: true
-      end
-      
-=======
+  # 関連付け
+  has_many :loans, dependent: :destroy
+  has_many :users, through: :loans
+
+  # バリデーション
+  validates :title, presence: true
+  validates :author, presence: true
+  validates :isbn, presence: true, uniqueness: true
+  validates :category, presence: true
+  validates :total_copies, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
+  # 検索メソッド（F-5検索／フィルタ要件対応）
   def self.search(keyword, category)
-    books = Book.all
+    books = all
     if keyword.present?
-      books = books.where("title LIKE ? OR author LIKE ?", "%#{keyword}%", "%#{keyword}%")
+      books = books.where("title LIKE :kw OR author LIKE :kw", kw: "%#{keyword}%")
     end
     if category.present?
       books = books.where(category: category)
     end
     books
   end
->>>>>>> 33cc43ff20fb874ff11f7d278c7a158fcc8f78d0
+
+  # 貸出可能冊数（全体冊数から貸出中を差し引く）
+  def available_copies
+    total_copies - loans.where(returned_at: nil).count
+  end
+
+  # 貸出可能かどうか
+  def available?
+    available_copies > 0
+  end
 end

@@ -1,19 +1,31 @@
-<h1>ログイン</h1>
+<!-- app/views/users/new.html.erb -->
 
-<%= form_with url: login_path, method: :post do |form| %>
+<h1>ユーザー登録</h1>
+
+<%= form_with  url: users_path, method: :post do |f| %>
   <div>
-    <%= form.label :student_no, "学籍番号" %>
-    <%= form.text_field :student_no, required: true %>
+    <%= f.label :student_no, "学籍番号" %><br>
+    <%= f.text_field :student_no %>
   </div>
 
   <div>
-    <%= form.label :password, "パスワード" %>
-    <%= form.password_field :password, required: true %>
+    <%= f.label :name, "氏名" %><br>
+    <%= f.text_field :name %>
   </div>
 
   <div>
-    <%= form.submit "ログイン", class: 'btn btn-primary' %>
+    <%= f.label :role, "ロール" %><br>
+    <%= f.select :role, options_for_select([["一般利用者", "user"], ["司書／管理者", "librarian"], ["システム管理者", "admin"]]) %>
+  </div>
+
+  <div>
+    <%= f.label :password, "パスワード" %><br>
+    <%= f.password_field :password %>
+  </div>
+
+  <div>
+    <%= f.submit "登録" %>
   </div>
 <% end %>
 
-<%= link_to '新規登録' %>
+<%= link_to "ログイン画面に戻る", login_path %>

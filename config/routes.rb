@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
 
   resources :sessions, only: [:new, :create, :destroy]
-  resources :books
-  post "users/create", as: :login
+  resources :books, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :loans, only: [:create, :update]
+
+  post "users/create", as: :login, to: "users#create"
   get "users/new", as: :login_page
+  get "/signup", to: "users#new", as: :signup
+   post "/users", to: "users#create"
 
   get 'books/index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -24,6 +28,9 @@ Rails.application.routes.draw do
     get 'login', to: 'sessions#new'
     post 'login', to: 'sessions#create'
     delete 'logout', to: 'sessions#destroy'
+  
+    resources :books, only: [:index, :show]
+    resources :loans, only: [:create, :update]
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

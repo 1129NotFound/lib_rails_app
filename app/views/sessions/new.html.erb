@@ -1,0 +1,23 @@
+<!-- app/views/sessions/new.html.erb -->
+
+<h1>ログイン</h1>
+
+<%= form_with url: login_path, method: :post do %>
+  <div>
+    <%= label_tag :student_no, "学籍番号" %><br>
+    <%= text_field_tag :student_no %>
+  </div>
+
+  <div>
+    <%= label_tag :password, "パスワード" %><br>
+    <%= password_field_tag :password %>
+  </div>
+
+  <%= submit_tag "ログイン" %>
+<% end %>
+
+<p>
+  <%= link_to "新規登録はこちら", signup_path %>
+</p>
+
+<%= flash[:alert] %>
