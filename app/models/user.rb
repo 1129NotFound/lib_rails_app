@@ -4,6 +4,10 @@ class User < ApplicationRecord
   validates :role, presence: true
   validates :password, presence: true
 
+  # 追加：貸出との関連付け
+  has_many :loans, dependent: :destroy
+  has_many :books, through: :loans
+
   def authenticate(plain_password)
     self.password == plain_password
   end

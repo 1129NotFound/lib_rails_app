@@ -10,7 +10,7 @@
   </p>
 
   <p>
-    <strong>Isbn:</strong>
+    <strong>ISBN:</strong>
     <%= book.isbn %>
   </p>
 
@@ -21,7 +21,28 @@
 
   <p>
     <strong>書籍の在庫:</strong>
-    <%= book.total_copies %>
+    <%= book.total_copies %> 冊中 <%= book.available_copies %> 冊貸出可能
   </p>
 
+  <p>
+    <strong>貸出状況:</strong>
+    <% if book.available? %>
+      <span style="color: green;">貸出可能</span>
+    <% else %>
+      <span style="color: red;">貸出中</span>
+    <% end %>
+  </p>
+
+  <%# ユーザーがログインしているか確認 %>
+  <% if defined?(current_user) && current_user.present? %>
+    <% if book.available? %>
+      <%= button_to "借りる", loans_path(book_id: book.id), method: :post %>
+    <% elsif current_user.loans.exists?(book: book, returned_at: nil) %>
+      <%= button_to "返却する", return_book_loans_path(book_id: book.id), method: :post %>
+    <% else %>
+      <p>貸出中です（他のユーザーが借りています）</p>
+    <% end %>
+  <% else %>
+    <p><%= link_to "ログインして借りる／返却する", login_page_path %></p>
+  <% end %>
 </div>
