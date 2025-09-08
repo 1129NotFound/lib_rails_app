@@ -4,7 +4,9 @@
 
 <div>
   <%= link_to "書籍を編集", edit_book_path(@book) %> |
-  <%= link_to "書籍一覧へ戻る", books_path %>
+  <%= link_to "書籍一覧へ戻る", books_path %> |
+  <%= link_to "さらに追加", new_book_path %> |
+  <%= link_to 'ホームに戻る', books_path %>
 
   <%= button_to "書籍を削除", @book, method: :delete %>
 </div>
