@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :books, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   resources :loans, only: [:create, :update]
 
+  root "books#index"
+
   post "sessions/create", as: :login, to: "sessions#create"
   get "sessions/new", as: :login_page
   get "/signup", to: "users#new", as: :signup
